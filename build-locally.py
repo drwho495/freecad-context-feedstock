@@ -8,6 +8,7 @@ import glob
 import subprocess
 from argparse import ArgumentParser
 import platform
+import sys
 
 
 def setup_environment(ns):

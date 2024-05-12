@@ -38,6 +38,7 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
 fi
 cmake -G "Ninja" \
       -D BUILD_WITH_CONDA:BOOL=ON \
+      -D CMAKE_CXX_FLAGS=-DFC_USE_TNP_FIX \
       -D CMAKE_BUILD_TYPE=${BUILD_TYPE} \
       -D CMAKE_INSTALL_PREFIX:FILEPATH="$PREFIX" \
       -D CMAKE_PREFIX_PATH:FILEPATH="$PREFIX" \
@@ -67,7 +68,7 @@ cmake -G "Ninja" \
       ${CMAKE_PLATFORM_FLAGS[@]} \
       ..
 
-ninja install
+ninja install -j$(nproc --ignore=2)
 rm -r ${PREFIX}/share/doc/FreeCAD     # smaller size of package!
 mv ${PREFIX}/bin/FreeCAD ${PREFIX}/bin/freecad
 mv ${PREFIX}/bin/FreeCADCmd ${PREFIX}/bin/freecadcmd
