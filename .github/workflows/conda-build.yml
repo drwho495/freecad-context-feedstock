@@ -22,25 +22,25 @@ jobs:
       matrix:
         include:
           - CONFIG: linux_64_python3.11.____cpython
-            UPLOAD_PACKAGES: False
+            UPLOAD_PACKAGES: false
             os: ubuntu
             runs_on: ['ubuntu-latest']
             DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
           - CONFIG: linux_aarch64_python3.11.____cpython
-            UPLOAD_PACKAGES: False
+            UPLOAD_PACKAGES: false
             os: ubuntu
             runs_on: ['ubuntu-latest']
             DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
           - CONFIG: osx_64_python3.11.____cpython
-            UPLOAD_PACKAGES: False
+            UPLOAD_PACKAGES: false
             os: macos
             runs_on: ['macos-13']
           - CONFIG: osx_arm64_python3.11.____cpython
-            UPLOAD_PACKAGES: False
+            UPLOAD_PACKAGES: false
             os: macos
             runs_on: ['macos-14']
           - CONFIG: win_64_python3.11.____cpython
-            UPLOAD_PACKAGES: False
+            UPLOAD_PACKAGES: false
             os: windows
             runs_on: ['windows-latest']
     steps:
@@ -116,3 +116,33 @@ jobs:
         UPLOAD_PACKAGES: ${{ matrix.UPLOAD_PACKAGES }}
         BINSTAR_TOKEN: ${{ secrets.BINSTAR_TOKEN }}
       if: matrix.os == 'windows'
+      
+    - name: Upload conda package (Ubuntu)
+      if: matrix.os == 'ubuntu'
+      working-directory: ${{ matrix.bundle_dir }}
+      env:
+        TARGET_REPO: ${{ github.repository }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEPLOY_RELEASE: ${{ matrix.tag }}
+        ASSET_PATTERN: ${{ matrix.asset_pattern }}
+      shell: bash
+      run: |
+        file=$(find ./ -maxdepth 1 -type f -name 'freecad*.conda' | head -n 1)
+        filename=$(basename "$file")
+        # Add "LINUX_" to the beginning of the filename
+        new_filename="LINUX_${filename}"
+        # store list of existing assets before upload
+        # exclude files with the same name as new ones
+        echo $(ls)
+        # make sure we are in the right directory
+        version_name=$(cat bundle_name.txt)
+        OLD_ASSETS=$(gh release view -R "$TARGET_REPO" "$DEPLOY_RELEASE" --json assets \
+          --jq ".assets[].name" | grep "$ASSET_PATTERN" | grep -vF $version_name || true; )
+        # upload new assets
+        gh release upload --clobber -R "$TARGET_REPO" "$DEPLOY_RELEASE" ${file} -n ${filename}
+        # remove old assets if upload was successful
+        if [ -n "$OLD_ASSETS" ]; then
+          while IFS= read -r asset; do
+            gh release delete-asset -y -R "$TARGET_REPO" "$DEPLOY_RELEASE" "$asset"
+          done <<< "$OLD_ASSETS"
+        fi
