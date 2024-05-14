@@ -74,7 +74,7 @@ jobs:
         echo "::endgroup::"
         mkdir build_artifacts
         mkdir ./build_artifacts/test/
-        ./build_artifacts/test/linux_testPkg.conda
+        touch ./build_artifacts/test/linux_testPkg.conda
         #python3 ./build-locally.py
 
     - name: Build on macOS
