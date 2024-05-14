@@ -132,8 +132,8 @@ jobs:
       run: |
         echo $(ls)
         echo $(ls ./build_artifacts)
-        file=$(sudo find ./../../.. -maxdepth 15 -type f -name 'freecad*' | head -n 1)
-        echo $(sudo find ./../../.. -maxdepth 15 -type f -name 'freecad*' | head -n 1)
+        file=$(sudo find ./../../.. -maxdepth 30 -type f -name 'freecad*.conda' | head -n 1)
+        echo $(sudo find ./../../.. -maxdepth 15 -type f -name 'freecad*')
         filename=$(basename "$file")
         # Add "LINUX_" to the beginning of the filename
         new_filename="LINUX_${filename}"
@@ -144,4 +144,4 @@ jobs:
         echo $(ls)
         # make sure we are in the right directory
         # upload new assets
-        gh release upload --clobber -R "$TARGET_REPO" "$DEPLOY_RELEASE" ${file} -n ${filename}
+        gh release upload --clobber -R "$TARGET_REPO" "$DEPLOY_RELEASE" ${file}
