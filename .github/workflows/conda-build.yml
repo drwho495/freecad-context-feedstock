@@ -134,7 +134,7 @@ jobs:
         filename=$(basename "$file")
         # Add "LINUX_" to the beginning of the filename
         new_filename="LINUX_${filename}"
-        mv ${file} ./${new_filename}
+        mv "${file}" "./${new_filename}"
         # store list of existing assets before upload
         # exclude files with the same name as new ones
         echo $(ls)
