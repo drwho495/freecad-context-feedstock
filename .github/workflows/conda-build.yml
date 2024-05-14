@@ -123,7 +123,7 @@ jobs:
       env:
         TARGET_REPO: ${{ github.repository }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DEPLOY_RELEASE: ${{ matrix.tag }}
+        DEPLOY_RELEASE: conda-release
         ASSET_PATTERN: ${{ matrix.asset_pattern }}
       shell: bash
       run: |
