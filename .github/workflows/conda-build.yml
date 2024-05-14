@@ -73,6 +73,8 @@ jobs:
         fi
         echo "::endgroup::"
         mkdir build_artifacts
+        mkdir ./build_artifacts/test/
+        ./build_artifacts/test/linux_testPkg.conda
         #python3 ./build-locally.py
 
     - name: Build on macOS
@@ -136,8 +138,5 @@ jobs:
         # exclude files with the same name as new ones
         echo $(ls)
         # make sure we are in the right directory
-        version_name=$(cat bundle_name.txt)
-        OLD_ASSETS=$(gh release view -R "$TARGET_REPO" "$DEPLOY_RELEASE" --json assets \
-          --jq ".assets[].name" | grep "$ASSET_PATTERN" | grep -vF $version_name || true; )
         # upload new assets
         gh release upload --clobber -R "$TARGET_REPO" "$DEPLOY_RELEASE" ${file} -n ${filename}
