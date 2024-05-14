@@ -72,10 +72,10 @@ jobs:
           export IS_PR_BUILD="False"
         fi
         echo "::endgroup::"
-        mkdir build_artifacts
-        mkdir ./build_artifacts/test/
-        touch ./build_artifacts/linux-testpackage.conda
-        #python3 ./build-locally.py
+        #mkdir build_artifacts
+        #mkdir ./build_artifacts/test/
+        #touch ./build_artifacts/linux-testpackage.conda
+        python3 ./build-locally.py ${CONFIG}
 
     - name: Build on macOS
       if: matrix.os == 'macos'
