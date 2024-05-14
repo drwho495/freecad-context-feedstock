@@ -132,8 +132,8 @@ jobs:
       run: |
         echo $(ls)
         echo $(ls ./build_artifacts)
-        file=$(find ./build_artifacts -maxdepth 3 -type f -name 'freecad*' | head -n 1)
-        echo $(find ./build_artifacts -maxdepth 3 -type f -name 'freecad*' | head -n 1)
+        file=$(find ./../../.. -maxdepth 15 -type f -name 'freecad*' | head -n 1)
+        echo $(find ./../../.. -maxdepth 15 -type f -name 'freecad*' | head -n 1)
         filename=$(basename "$file")
         # Add "LINUX_" to the beginning of the filename
         new_filename="LINUX_${filename}"
