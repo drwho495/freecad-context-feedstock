@@ -130,6 +130,8 @@ jobs:
         ASSET_PATTERN: ${{ matrix.asset_pattern }}
       shell: bash
       run: |
+        echo $(ls)
+        echo $(ls ./build_artifacts)
         file=$(find ./ -name 'freecad*.conda')
         filename=$(basename "$file")
         # Add "LINUX_" to the beginning of the filename
