@@ -1,7 +1,8 @@
 channel_sources:
 - freecad/label/dev,conda-forge,defaults
 channel_targets:
-- freecad dev
+#- freecad dev
+- hypocritical dev
 MACOSX_DEPLOYMENT_TARGET:  # [osx]
 - '11.0'                   # [osx and arm64]
 - '10.13'                  # [osx and x86_64]
