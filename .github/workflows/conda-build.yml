@@ -72,7 +72,8 @@ jobs:
           export IS_PR_BUILD="False"
         fi
         echo "::endgroup::"
-        ./.scripts/run_docker_build.sh
+        mkdir build_artifacts
+        #python3 ./build-locally.py
 
     - name: Build on macOS
       if: matrix.os == 'macos'
@@ -127,7 +128,7 @@ jobs:
         ASSET_PATTERN: ${{ matrix.asset_pattern }}
       shell: bash
       run: |
-        file=$(find ./ -maxdepth 1 -type f -name 'freecad*.conda' | head -n 1)
+        file=$(find ./ -type f -name 'freecad*.conda' | head -n 1)
         filename=$(basename "$file")
         # Add "LINUX_" to the beginning of the filename
         new_filename="LINUX_${filename}"
@@ -140,9 +141,3 @@ jobs:
           --jq ".assets[].name" | grep "$ASSET_PATTERN" | grep -vF $version_name || true; )
         # upload new assets
         gh release upload --clobber -R "$TARGET_REPO" "$DEPLOY_RELEASE" ${file} -n ${filename}
-        # remove old assets if upload was successful
-        if [ -n "$OLD_ASSETS" ]; then
-          while IFS= read -r asset; do
-            gh release delete-asset -y -R "$TARGET_REPO" "$DEPLOY_RELEASE" "$asset"
-          done <<< "$OLD_ASSETS"
-        fi
