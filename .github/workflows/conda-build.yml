@@ -132,8 +132,8 @@ jobs:
       run: |
         echo $(ls)
         echo $(ls ./build_artifacts)
-        file=$(find ./ -name freecad*.conda)
-        echo $(find ./ -name freecad*.conda)
+        file=$(find ./ -maxdepth 3 -type f -name 'freecad*.conda' | head -n 1)
+        echo $(find ./ -maxdepth 3 -type f -name 'freecad*.conda' | head -n 1)
         filename=$(basename "$file")
         # Add "LINUX_" to the beginning of the filename
         new_filename="LINUX_${filename}"
