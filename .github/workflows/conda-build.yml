@@ -132,8 +132,8 @@ jobs:
       run: |
         echo $(ls)
         echo $(ls ./build_artifacts)
-        file=$(sudo find ~/ -maxdepth 30 -type f -name 'freecad*.conda' | head -n 1)
-        echo $(sudo find ~/ -maxdepth 15 -type f -name 'freecad*')
+        file=$(sudo find ./../.. -maxdepth 30 -type f -name 'freecad*.conda' | head -n 1)
+        echo $(sudo find ./../.. -maxdepth 15 -type f -name 'freecad*')
         echo "\n\n${file}"
         filename=$(basename "$file")
         #sudo mv "${file}" "./${filename}"
