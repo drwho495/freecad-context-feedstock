@@ -130,12 +130,14 @@ jobs:
         ASSET_PATTERN: ${{ matrix.asset_pattern }}
       shell: bash
       run: |
+        echo $(ls)
         zipName="./linux-conda-release.zip"
         file=$(python3 ./get-freecad-package.py)
+        echo $(python3 ./get-freecad-package.py)
+        echo $(file)
         sudo zip -j ${zipName} ${file}
         # store list of existing assets before upload
         # exclude files with the same name as new ones
-        echo $(ls)
         # make sure we are in the right directory
         # upload new assets
         gh release upload --clobber -R https://github.com/drwho495/freecad-context-feedstock conda-release "${zipName}"
