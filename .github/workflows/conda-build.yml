@@ -113,10 +113,11 @@ jobs:
         set "sha=%GITHUB_SHA%"
         call ".scripts\run_win_build.bat"
       env:
-        TARGET_REPO: ${{ github.repository }}
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DEPLOY_RELEASE: conda-release
-        ASSET_PATTERN: ${{ matrix.asset_pattern }}
+        PYTHONUNBUFFERED: 1
+        CONFIG: ${{ matrix.CONFIG }}
+        CI: github_actions
+        UPLOAD_PACKAGES: ${{ matrix.UPLOAD_PACKAGES }}
+        BINSTAR_TOKEN: ${{ secrets.BINSTAR_TOKEN }}
       if: matrix.os == 'windows'
 
     - name: Upload conda package (Windows)
