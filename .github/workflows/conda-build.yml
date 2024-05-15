@@ -131,7 +131,7 @@ jobs:
       shell: bash
       run: |
         zipName="./linux-conda-release.zip"
-        file=$(find ./ -name freecad*.conda)
+        file=$(python3 ./get-freecad-package.py)
         sudo zip -j ${zipName} ${file}
         # store list of existing assets before upload
         # exclude files with the same name as new ones
