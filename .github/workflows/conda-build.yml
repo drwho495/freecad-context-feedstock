@@ -112,7 +112,6 @@ jobs:
         set "remote_url=https://github.com/%GITHUB_REPOSITORY%"
         set "sha=%GITHUB_SHA%"
         call ".scripts\run_win_build.bat"
-        #python3 ./build-locally.py ${CONFIG}
       env:
         TARGET_REPO: ${{ github.repository }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
