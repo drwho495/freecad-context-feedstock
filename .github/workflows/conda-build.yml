@@ -131,6 +131,8 @@ jobs:
       shell: bash
       run: |
         echo $(ls)
+        echo $(ls ./build_artifacts/)
+        echo $(ls ./build_artifacts/linux-64)
         zipName="./linux-conda-release.zip"
         file=$(python3 ./get-freecad-package.py)
         echo $(python3 ./get-freecad-package.py)
