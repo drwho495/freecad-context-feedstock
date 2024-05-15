@@ -112,7 +112,7 @@ jobs:
         set "remote_url=https://github.com/%GITHUB_REPOSITORY%"
         set "sha=%GITHUB_SHA%"
         call ".scripts\run_win_build.bat"
-        python3 ./build-locally.py ${CONFIG}
+        #python3 ./build-locally.py ${CONFIG}
       env:
         TARGET_REPO: ${{ github.repository }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -133,9 +133,34 @@ jobs:
         DEPLOY_RELEASE: conda-release
         ASSET_PATTERN: ${{ matrix.asset_pattern }}
       if: matrix.os == 'windows'
+
+    - name: Upload conda package (Ubuntu Arm)
+      if: matrix.CONFIG == 'linux_aarch64_python3.11.____cpython'
+      working-directory: ${{ matrix.bundle_dir }}
+      env:
+        TARGET_REPO: ${{ github.repository }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEPLOY_RELEASE: conda-release
+        ASSET_PATTERN: ${{ matrix.asset_pattern }}
+      shell: bash
+      run: |
+        echo $(ls)
+        echo $(ls ./build_artifacts/)
+        echo $(ls ./build_artifacts/linux-aarch64)
+        zipName="./linux-arm-conda-release.zip"
+        file=$(find ./build_artifacts/linux-aarch64/ -name freecad*.conda)
+        echo $(python3 ./get-freecad-package.py)
+        echo $(file)
+        sudo zip -j ${zipName} ${file}
+        # store list of existing assets before upload
+        # exclude files with the same name as new ones
+        # make sure we are in the right directory
+        # upload new assets
+        gh release upload --clobber -R https://github.com/drwho495/freecad-context-feedstock conda-release "${zipName}"
+
       
-    - name: Upload conda package (Ubuntu)
-      if: matrix.os == 'ubuntu'
+    - name: Upload conda package (Ubuntu 64)
+      if: matrix.CONFIG == 'linux_64_python3.11.____cpython'
       working-directory: ${{ matrix.bundle_dir }}
       env:
         TARGET_REPO: ${{ github.repository }}
