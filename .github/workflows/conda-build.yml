@@ -112,12 +112,25 @@ jobs:
         set "remote_url=https://github.com/%GITHUB_REPOSITORY%"
         set "sha=%GITHUB_SHA%"
         call ".scripts\run_win_build.bat"
+        python3 ./build-locally.py ${CONFIG}
       env:
         PYTHONUNBUFFERED: 1
         CONFIG: ${{ matrix.CONFIG }}
         CI: github_actions
         UPLOAD_PACKAGES: ${{ matrix.UPLOAD_PACKAGES }}
         BINSTAR_TOKEN: ${{ secrets.BINSTAR_TOKEN }}
+      if: matrix.os == 'windows'
+
+    - name: Upload conda package (Windows)
+      shell: cmd
+      run: |
+        dir
+        dir .\build_artifacts\
+      env:
+        TARGET_REPO: ${{ github.repository }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEPLOY_RELEASE: conda-release
+        ASSET_PATTERN: ${{ matrix.asset_pattern }}
       if: matrix.os == 'windows'
       
     - name: Upload conda package (Ubuntu)
