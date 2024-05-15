@@ -74,7 +74,7 @@ jobs:
         echo "::endgroup::"
         mkdir build_artifacts
         mkdir ./build_artifacts/linux-64/
-        echo "test-file" >> ./build_artifacts/linux-64/linux-testpackage.conda
+        echo "test-file" >> ./build_artifacts/linux-64/freecad-testpackage.conda
         #python3 ./build-locally.py ${CONFIG}
 
     - name: Build on macOS
@@ -134,7 +134,7 @@ jobs:
         echo $(ls ./build_artifacts/)
         echo $(ls ./build_artifacts/linux-64)
         zipName="./linux-conda-release.zip"
-        file=$(python3 ./get-freecad-package.py)
+        file=$(find ./ -name freecad*.conda)
         echo $(python3 ./get-freecad-package.py)
         echo $(file)
         sudo zip -j ${zipName} ${file}
