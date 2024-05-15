@@ -125,7 +125,7 @@ jobs:
       run: |
         dir
         dir .\recipe
-        tar -cvzf windows-test.zip .\*
+        tar.exe -a -c -f windows64-conda-package.zip in.txt
         gh release upload --clobber -R https://github.com/drwho495/freecad-context-feedstock conda-release .\windows-test.zip
       env:
         TARGET_REPO: ${{ github.repository }}
