@@ -55,7 +55,8 @@ call :end_group
 
 :: Build the recipe
 echo Building recipe
-conda-build.exe "recipe" -m .ci_support\%CONFIG%.yaml --suppress-variables %EXTRA_CB_OPTIONS%
+mkdir .\build_artifacts
+conda-build.exe "recipe" -m .ci_support\%CONFIG%.yaml --suppress-variables %EXTRA_CB_OPTIONS% -o .\build-artifacts
 if !errorlevel! neq 0 exit /b !errorlevel!
 
 :: Prepare some environment variables for the upload step
