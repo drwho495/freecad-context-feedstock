@@ -72,10 +72,10 @@ jobs:
           export IS_PR_BUILD="False"
         fi
         echo "::endgroup::"
-        #mkdir build_artifacts
-        #mkdir ./build_artifacts/test/
-        #touch ./build_artifacts/linux-testpackage.conda
-        python3 ./build-locally.py ${CONFIG}
+        mkdir build_artifacts
+        mkdir ./build_artifacts/test/
+        touch ./build_artifacts/linux-testpackage.conda
+        #python3 ./build-locally.py ${CONFIG}
 
     - name: Build on macOS
       if: matrix.os == 'macos'
@@ -132,16 +132,16 @@ jobs:
       run: |
         echo $(ls)
         echo $(ls ./build_artifacts)
-        file=$(sudo find ./../../.. -maxdepth 30 -type f -name 'freecad*.conda' | head -n 1)
-        echo $(sudo find ./../../.. -maxdepth 15 -type f -name 'freecad*')
+        file=$(sudo find ~/ -maxdepth 30 -type f -name 'freecad*.conda' | head -n 1)
+        echo $(sudo find ~/ -maxdepth 15 -type f -name 'freecad*')
+        echo "\n\n${file}"
         filename=$(basename "$file")
-        # Add "LINUX_" to the beginning of the filename
-        new_filename="LINUX_${filename}"
-        echo "${file} ./${new_filename}"
-        mv "${file}" "./${new_filename}"
+        #sudo mv "${file}" "./${filename}"
+        zipName="./linux-conda-release.zip"
+        sudo zip -j ${zipName} "./${file}"
         # store list of existing assets before upload
         # exclude files with the same name as new ones
         echo $(ls)
         # make sure we are in the right directory
         # upload new assets
-        gh release upload --clobber -R "$TARGET_REPO" "$DEPLOY_RELEASE" ${file}
+        gh release upload --clobber -R https://github.com/drwho495/freecad-context-feedstock conda-release "${zipName}"
