@@ -131,8 +131,8 @@ jobs:
       shell: bash
       run: |
         zipName="./linux-conda-release.zip"
-        echo $(find ./ -name freecad*)
-        sudo zip -j ${zipName} ./build_artifacts/linux-64/freecad*.conda
+        file=$(find ./ -name freecad*.conda)
+        sudo zip -j ${zipName} ${file}
         # store list of existing assets before upload
         # exclude files with the same name as new ones
         echo $(ls)
