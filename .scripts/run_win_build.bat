@@ -82,6 +82,8 @@ if /i "%CI%" == "azure" (
 
 :: Validate
 
+dir
+
 if /i "%UPLOAD_PACKAGES%" == "true" (
     if /i "%IS_PR_BUILD%" == "false" (
         call :start_group "Uploading packages"
