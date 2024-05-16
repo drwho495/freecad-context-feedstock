@@ -11,7 +11,7 @@ freetype:
 hdf5:
 - 1.14.3
 libboost_devel:
-- '1.83'
+- '1.84'
 pyqtwebengine:
 - '5.15.9'
 occt:
