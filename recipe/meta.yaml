@@ -41,7 +41,6 @@ requirements:
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     host:
         - libboost-devel
-        - pyqtwebengine
         - python
         - qt-main
         - occt
