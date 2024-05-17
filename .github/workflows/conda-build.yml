@@ -181,4 +181,4 @@ jobs:
         # exclude files with the same name as new ones
         # make sure we are in the right directory
         # upload new assets
-        gh release upload --clobber -R https://github.com/drwho495/freecad-context-feedstock conda-release "${zipName}"
+        gh release upload --clobber -R https://github.com/drwho495/freecad-context-feedstock conda-release-linkstage "${zipName}"
