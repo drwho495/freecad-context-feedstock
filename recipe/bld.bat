@@ -9,8 +9,8 @@ if "%FEATURE_DEBUG%"=="1" (
       set BUILD_TYPE="Release")
 
 
-set "CFLAGS= -DFC_USE_TNP_FIX"
-set "CXXFLAGS= "
+set "CFLAGS= "
+set "CXXFLAGS= -DFC_USE_TNP_FIX"
 set "LDFLAGS_SHARED= ucrt.lib"
 
 cmake -G "Ninja" ^
