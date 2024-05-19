@@ -125,7 +125,7 @@ jobs:
       shell: cmd
       run: |
         dir
-        C:\bld\
+        dir C:\bld\
         dir .\build_artifacts
         tar.exe -a -c -f windows64-conda-package.zip .\build_artifacts
         gh release upload --clobber -R https://github.com/drwho495/freecad-context-feedstock conda-release .\windows-test.zip
