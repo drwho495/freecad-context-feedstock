@@ -9,7 +9,7 @@ if "%FEATURE_DEBUG%"=="1" (
       set BUILD_TYPE="Release")
 
 
-set "CFLAGS= "
+set "CFLAGS= -DFC_USE_TNP_FIX"
 set "CXXFLAGS= "
 set "LDFLAGS_SHARED= ucrt.lib"
 
