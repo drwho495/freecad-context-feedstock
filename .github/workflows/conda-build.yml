@@ -126,9 +126,9 @@ jobs:
       run: |
         dir
         dir C:\bld\
-        dir .\build_artifacts
-        tar.exe -a -c -f windows64-conda-package.zip .\build_artifacts
-        gh release upload --clobber -R https://github.com/drwho495/freecad-context-feedstock conda-release .\windows-test.zip
+        dir .\build_artifacts\win-64
+        tar -a -c -f windows-conda-package.zip -C build_artifacts\win-64\ *.conda
+        gh release upload --clobber -R https://github.com/drwho495/freecad-context-feedstock conda-release .\windows-conda-package.zip
       env:
         TARGET_REPO: ${{ github.repository }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
